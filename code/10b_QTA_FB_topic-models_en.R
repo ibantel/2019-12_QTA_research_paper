@@ -154,42 +154,6 @@ rm(gamma_terms, td_beta, td_gamma, top_terms, heldout, ks)
 effects_topic_model_en <- estimateEffect(topics_en ~ islamist + magnitude + outlet_pol_leaning + int_isl_lean + int_isl_magn + int_isl_lean_magn,
                                       stmobj = topic_model_en, meta = stm_fbposts_en$meta, uncertainty = "Global")
 
-# 2.5 plot effects of covariates [old]----
-pdf(paste0("./output/3-coeffplot_en_", topic_num_en, "_topics_coeffs_", format(Sys.time(), "%Y-%m-%d_%H-%M"), ".pdf"))
-plot(effects_topic_model_en, # plot impact of dummy categorical variables
-     #covariate = "islamist", # islamist
-     #cov.value1 = 0, # islamist
-     #cov.value2 = 1, # islamist
-     # 15 negatively significant
-     #covariate = "magnitude", # magnitude
-     #cov.value1 = 0, # magnitude
-     #cov.value2 = 2, # magnitude
-     # 15 negatively significant
-     #covariate = "outlet_pol_leaning",
-     #cov.value1 = -3, # leaning
-     #cov.value2 = 3, # leaning
-     # 39 negatively significant 
-     #covariate = "int_isl_lean", # int_isl_lean
-     #cov.value1 = -3, # int_isl_lean
-     #cov.value2 = 3, # int_isl_lean
-     # none significant
-     #covariate = "int_isl_magn", # int_isl_magn
-     #cov.value1 = 0, # int_isl_magn
-     #cov.value2 = 2, # int_isl_magn
-     # 15 positively significant
-     covariate = "int_isl_lean_magn", # int_isl_lean_magn
-     cov.value1 = -6, # int_isl_lean_magn
-     cov.value2 = 6, # int_isl_lean_magn
-     # none significant
-     topics = topics_en,
-     model = topic_model_en,
-     method = "difference",
-     #xlim = c(-.2, .2),
-     labeltype = "custom", custom.labels = topics_en, #seq(1:topic_num), #labels, # pay attention to labelling!
-     main = "Effects",
-     xlab = "more ... vs. less ...") # e.g. given an Islamist attack, we're more likely to read about the topic "terror, angriff"
-dev.off()
-
 # Z-CLEANUP----
 save(stm_fbposts_en, many_models_en, k_result_en, topic_model_en, effects_topic_model_en, # save as Rdata since it takes long to calculate this
      file = paste0("./data/Z_topic_models_en_", format(Sys.time(), "%Y-%m-%d_%H-%M"), ".Rdata"))
