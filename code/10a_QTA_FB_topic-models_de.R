@@ -153,59 +153,6 @@ rm(gamma_terms, td_beta, td_gamma, top_terms, heldout, ks)
 effects_topic_model_de <- estimateEffect(topics_de ~ islamist + magnitude + outlet_pol_leaning + int_isl_lean + int_isl_magn + int_isl_lean_magn,
                                       stmobj = topic_model_de, meta = stm_fbposts_de$meta, uncertainty = "Global")
 
-# 2.5 PLOT COEFFICIENTS----
-# 2.5.1 plot effects of islamist----
-pdf(paste0("./output/13a_plot_de_", topic_num_de, "_topics_coeffs_islamist_", format(Sys.time(), "%Y-%m-%d_%H-%M"), ".pdf"))
-plot(effects_topic_model_de, # plot impact of dummy categorical variables
-     covariate = "islamist", # islamist
-     cov.value1 = 0, # islamist
-     cov.value2 = 1, # islamist
-     # 15 negatively significant
-     topics = topics_de,
-     model = topic_model_de,
-     method = "difference",
-     #xlim = c(-.2, .2),
-     labeltype = "custom", custom.labels = topics_de, #seq(1:topic_num), #labels, # pay attention to labelling!
-     main = "Effects",
-     xlab = "more ... vs. less ...") # e.g. given an Islamist attack, we're more likely to read about the topic "terror, angriff"
-dev.off()
-
-# 2.5.2 plot effects of islamist----
-pdf(paste0("./output/13a_plot_de_", topic_num_de, "_topics_coeffs_islamist_", format(Sys.time(), "%Y-%m-%d_%H-%M"), ".pdf"))
-plot(effects_topic_model_de, # plot impact of dummy categorical variables
-     #covariate = "islamist", # islamist
-     #cov.value1 = 0, # islamist
-     #cov.value2 = 1, # islamist
-     # 15 negatively significant
-     #covariate = "magnitude", # magnitude
-     #cov.value1 = 0, # magnitude
-     #cov.value2 = 2, # magnitude
-     # 15 negatively significant
-     #covariate = "outlet_pol_leaning",
-     #cov.value1 = -3, # leaning
-     #cov.value2 = 3, # leaning
-     # 39 negatively significant 
-     #covariate = "int_isl_lean", # int_isl_lean
-     #cov.value1 = -3, # int_isl_lean
-     #cov.value2 = 3, # int_isl_lean
-     # none significant
-     #covariate = "int_isl_magn", # int_isl_magn
-     #cov.value1 = 0, # int_isl_magn
-     #cov.value2 = 2, # int_isl_magn
-     # 15 positively significant
-     covariate = "int_isl_lean_magn", # int_isl_lean_magn
-     cov.value1 = -6, # int_isl_lean_magn
-     cov.value2 = 6, # int_isl_lean_magn
-     # none significant
-     topics = topics,
-     model = topic_model_de,
-     method = "difference",
-     #xlim = c(-.2, .2),
-     labeltype = "custom", custom.labels = topics, #seq(1:topic_num), #labels, # pay attention to labelling!
-     main = "Effects",
-     xlab = "more ... vs. less ...") # e.g. given an Islamist attack, we're more likely to read about the topic "terror, angriff"
-dev.off()
-
 # Z-CLEANUP----
 save(stm_fbposts_de, many_models_de, k_result_de, topic_model_de, effects_topic_model_de, # save as Rdata since it takes long to calculate this
      file = paste0("./data/Z_topic_models_de_", format(Sys.time(), "%Y-%m-%d_%H-%M"), ".Rdata"))
